@@ -1,0 +1,469 @@
+
+<!DOCTYPE html>
+<html lang="en">
+    
+    <head>
+        <meta charset="utf-8">
+        <title>Gay Marriage States</title>
+        <script type="text/javascript" src="http://mbostock.github.com/d3/d3.js"></script>
+        <script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
+        <script src="//netdna.bootstrapcdn.com/bootstrap/2.3.2/js/bootstrap.min.js"></script>
+        <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/2.3.2/css/bootstrap.min.css">
+        <style type="text/css">
+            path {
+                fill: #ccc;
+                stroke: #fff;
+                stroke-width: 1px;
+            }
+            .main {
+                position: relative;
+                width: 100%;
+                max-width: 740px;
+                height: 2500px;
+            }
+
+            .details{
+                font-size: 11px;
+                font-weight: bolder;
+                font-style: italic;
+                margin-top: 100px;
+                color: "#ddd";
+            }
+            .country {
+                position: relative;
+                float: left;
+                width: 340px;
+                height: 260px;
+                margin: 10px 10px 0px 0px;
+                padding: 10px;
+                background-color: #ddd;
+            }
+            .cntydiv{
+                width: 340px;
+                height: 260px;
+            }
+            .backdiv{
+                position: relative;
+                text-align: right;
+                font-size: 12px;
+                margin-top: -15px;
+                width: 340px;
+                height: 20px;
+            }
+            .stateImg {
+                width: 56px;
+                height: 56px;
+                float: left;
+                margin-right: 10px;
+                margin-bottom: 0px;
+            }
+            .center{
+                height: 20px; 
+                width: 38%;
+                margin:auto;
+            }
+            .tooltip {
+                position: absolute;
+                text-align: left;
+                max-width: 120px;
+                min-height: 12px;
+                padding: 8px;
+                font: 13px sans-serif;
+                background: #fff;
+                border: solid 1px #999;
+                border-radius: 8px;
+                visibility: hidden;
+                opacity: 0.9;
+            }
+            .tipHed {
+                font-size: 15px;
+                font-weight: bold;
+            }
+            .textBox {
+                position: absolute;
+                background-color: null;
+                font-size: 12px;
+                color: #404040;
+                z-index: 1000;
+            }
+        </style>
+    </head>
+    
+    <body>
+        <div id="container" class="main">
+
+             <svg style="height: 50px; width:600px; margin-left: 100px;">  <g id="legend">
+                <circle fill="#0080C3" cx="5" cy="11" r="3.5"/>
+                <circle fill="#00AEEF" cx="5" cy="30" r="3.5"/>
+                <circle fill="#FF8593" cx="318" cy="11" r="3.5"/>
+                <circle fill="#ED1C24" cx="318" cy="30" r="3.5"/>
+                <text transform="matrix(1 0 0 1 12 16)" font-size="14">
+                    Same-sex marriage allowed</text>
+                <text transform="matrix(1 0 0 1 12 35)" font-size="14">
+                    Civil unions, domestic partnerships allowed</text>
+                <text transform="matrix(1 0 0 1 326 16)" font-size="14">
+                    Legal ban on same-sex marriage</text>
+                <text transform="matrix(1 0 0 1 326 35)" font-size="14">
+                    Constitutional ban on same-sex marriage</text>
+            </g></svg>
+
+
+            <div id="btncontainer" class="center">
+            <div class="btn-group" data-toggle="buttons-radio">
+                <button id="showAll" class="btn btn-default active">All states</button>
+                <button id="court" class="btn btn-default">Court cases pending</button>
+                <button id="legal" class="btn btn-default">Legislative battles</button>
+            </div>
+            </div>
+
+            <div id="mapContainer"></div>
+
+            <div style="font-size: 20px; font-weight: bold;">States with court or legislative action</div>
+
+                <div id="state01" class="country">
+                    <div class="cntydiv"><img src="images/ala.png" class="stateImg"><b>Alabama</b>
+                    </br>Paul Hard filed suit to overturn the state's constitutional ban on same-sex marriage this month, after his husband, David Fancher, died in a 2011 car accident. According to the Southern Poverty Law Center, Hard was barred from entering the hospital room and inquired for half an hour about his husband's condition before a nurse told him: "Well, he’s dead." Fancher, who married Hard in Massachusetts earlier that year, was buried with the status "single" on his death certificate. Hard is suing so that he can be named a surviving spouse in a wrongful-death suit.</div><div class="backdiv"> <a href="#container">Back to map</a></div></div>
+
+                <div id="state02" class="country">
+                    <div class="cntydiv"><img src="images/ak.png" class="stateImg"><b>Alaska</b>
+                    </br>Five gay couples filed suit in Anchorage in May to overturn the state’s 1998 constitutional ban on same-sex marriage.</div><div class="backdiv"> <a href="#container">Back to map</a></div></div>
+
+                <div id="state04" class="country">
+                    <div class="cntydiv"><img src="images/az.png" class="stateImg"><b>Arizona</b>
+                    </br>In January, four couples filed a class-action lawsuit to overturn the state's constitutional and legal bans on same-sex marriage, as well as to force the state to recognize out-of-state marriages. Two of the couples have adopted children through the state's foster-care system. The Arizona Legislature approved a measure that would allow businesses and religious organizations to choose not to serve same-sex couples this month. It is headed to Republican Gov. Jan Brewer's desk for her signature.</div><div class="backdiv"> <a href="#container">Back to map</a></div></div>
+
+                <div id="state05" class="country">
+                    <div class="cntydiv"><img src="images/ark.png" class="stateImg"><b>Arkansas</b>
+                    </br>A judge ruled against Arkansas’ 2004 constitutional ban on same-sex marriages in May, siding with 11 gay and lesbian couples who sued the state. After the initial ruling, same-sex couples in Arkansas were issued marriage licenses, but judge Chris Piazza soon issued a stay, halting further marriages while the case goes through the appeals process. Three other couples filed a separate suit seeking the right to marry in July, 2013.</div> <div class="backdiv"> <a href="#container">Back to map</a></div></div>
+
+                <div id="state08" class="country">
+                    <div class="cntydiv"><img src="images/colo.png" class="stateImg"><b>Colorado</b>
+                    </br>Civil unions became legal in Colorado last year, but the state maintains a constitutional amendment passed in 2006 that defines "marriage" as a union between a man and a woman. Nine same-sex couples filed suit in state court for full marriage rights this month.</div><div class="backdiv"> <a href="#container">Back to map</a></div></div>
+
+                <div id="state12" class="country">
+                    <div class="cntydiv"><img src="images/fla.png" class="stateImg"><b>Florida</b>
+                    </br>Six same-sex couples from the Miami area, along with the National Center for Lesbian Rights and the Equality Florida Institute, filed suit in January to overturn the state's 2008 voter-passed ban on gay marriage. The ACLU, along with eight other same-sex couples, filed a separate suit in March.</div> <div class="backdiv"> <a href="#container">Back to map</a></div></div>
+                
+                <div id="state13" class="country">
+                    <div class="cntydiv"><img src="images/ga.png" class="stateImg"><b>Georgia</b>
+                    </br>Lambda Legal filed suit in April to overturn Georgia’s constitutional ban on same-sex marriages, as well as to force the state to recognize gay marriages performed outside of its borders. Three couples are participating in the case, as well as a woman whose partner died and desires to be listed on her death certificate. </div><div class="backdiv"> <a href="#container">Back to map</a></div></div>
+                
+                <div id="state16" class="country">
+                    <div class="cntydiv"><img src="images/idaho.png" class="stateImg"><b>Idaho</b>
+                    </br>A federal judge ruled in favor of four couples from Boise and the National Center for Lesbian Rights, finding the state's 2006 ban on gay marriage unconstitutional. That decision was stayed by a separate court, while Republican Gov. Butch Otter pursues an appeal. Idaho is also considering legislation that would allow businesses and religious organizations to elect not to serve same-sex couples on the basis of religious objection.</div><div class="backdiv"> <a href="#container">Back to map</a></div></div>
+
+                <div id="state18" class="country">
+                    <div class="cntydiv"><img src="images/ind.png" class="stateImg"><b>Indiana</b>
+                    </br>Four gay couples filed suit in March to overturn Indiana’s 1997 law banning same-sex marriage. Indiana is one of just four states with a legal, but not constitutional, ban. This year, both chambers of the state Legislature approved a separate constitutional ban, which will have to be approved by voters. But first, the legislature will have to pass the legislation again in the 2015 or 2016 session in order to put the issue on the ballot in 2016. </div><div class="backdiv"> <a href="#container">Back to map</a></div></div>
+                
+                <div id="state20" class="country">
+                    <div class="cntydiv"><img src="images/kan.png" class="stateImg"><b>Kansas</b>
+                    </br>Two couples filed suit in December, seeking recognition of their out-of-state marriages for tax purposes. The suit does not address the legality of marriages performed within the state. The state is also pursuing legislation that would allow businesses and religious organizations to elect not to serve same-sex couples on the basis of religious objection. </div> <div class="backdiv"> <a href="#container">Back to map</a></div></div>
+
+                <div id="state21" class="country">
+                    <div class="cntydiv"><img src="images/ky.png" class="stateImg"><b>Kentucky</b>
+                    </br>A U.S. District Court judge ruled this month that the state must recognize out-of-state same-sex marriages. Two same-sex couples have since filed a motion in the case seeking the right to marry within Kentucky's borders. </div><div class="backdiv"> <a href="#container">Back to map</a></div></div>
+                
+                <div id="state22" class="country">
+                    <div class="cntydiv"><img src="images/la.png" class="stateImg"><b>Louisiana</b>
+                    </br>Six same-sex married couples have filed three separate lawsuits seeking state recognition of their marriages, but not a legalization of the practice within the state. </div> <div class="backdiv"> <a href="#container">Back to map</a></div></div>
+
+                <div id="state26" class="country">
+                    <div class="cntydiv"><img src="images/mich.png" class="stateImg"><b>Michigan</b>
+                    </br>A U.S. District Court judge ruled in March that the state’s 2004 ban on same-sex marriage is unconstitutional. Hundreds of gay and lesbian couples were married the day after the ruling was issued, but hours later, a separate court granted a stay, halting further marriages while the case is appealed. </div> <div class="backdiv"> <a href="#container">Back to map</a></div></div>
+
+                <div id="state28" class="country">
+                    <div class="cntydiv"><img src="images/miss.png" class="stateImg"><b>Mississippi</b>
+                    </br>Lauren Beth Czekala-Chatham filed suit in late 2013 to force the state of Mississippi to recognize her marriage in order to grant her a divorce. A federal judge decided against Czekala-Chatham in December, ruling that the state does not recognize her marriage and therefore would not grant a divorce. Czekala-Chatham is appealing.</a></div></div>
+                
+                <div id="state29" class="country">
+                    <div class="cntydiv"><img src="images/mo.png" class="stateImg"><b>Missouri</b>
+                    </br>The American Civil Liberties Union and a state-based gay-rights organization filed suit on behalf of eight same-sex married couples in February, requesting that Missouri recognize their unions. The lawsuit, if successful, would not overturn the state's 2004 constitutional ban on same-sex marriages within the state. </div> <div class="backdiv"> <a href="#container">Back to map</a></div></div>
+
+                <div id="state30" class="country">
+                    <div class="cntydiv"><img src="images/mt.png" class="stateImg"><b>Montana</b>
+                    </br>The Montana chapter of the ACLU filed suit against state officials in May on behalf of four same-sex couples seeking to overturn the state’s 2004 constitutional ban on same-sex marriage </div><div class="backdiv"> <a href="#container">Back to map</a></div></div>
+                
+                <div id="state31" class="country">
+                    <div class="cntydiv"><img src="images/neb.png" class="stateImg"><b>Nebraska</b>
+                    </br>A same-sex couple in Nebraska filed suit in 2013 seeking recognition of their marriage in order to get a divorce. They were legally married in Iowa in 2009.</a></div></div>
+
+                <div id="state32" class="country">
+                    <div class="cntydiv"><img src="images/nev.png" class="stateImg"><b>Nevada</b>
+                    </br>Nevada legalized domestic partnerships in 2009, but advocates continue to push to overturn the state's constitutional definition of "marriage" as a union between a man and a woman. Republican Gov. Brian Sandoval and the state attorney general announced this month that they would not defend the state's marriage ban in an ongoing appeals-court battle. And the state Legislature approved a same-sex marriage bill last year. Both chambers will have to pass the legalization bill again in 2015 for it to be put before voters on the 2016 ballot. </div><div class="backdiv"> <a href="#container">Back to map</a></div></div>
+                
+                <div id="state37" class="country">
+                    <div class="cntydiv"><img src="images/nc.png" class="stateImg"><b>North Carolina</b>
+                    </br>Six couples are seeking to overturn a gay marriage ban approved by voters in 2012, as well as the ability to adopt children. The state filed a motion to dismiss the case in September, and the state legislature has retained legal counsel to defend the constitutional ban. </div> <div class="backdiv"> <a href="#container">Back to map</a></div></div>
+
+                <div id="state38" class="country">
+                    <div class="cntydiv"><img src="images/nd.png" class="stateImg"><b>North Dakota</b>
+                    </br>Seven same-couples filed suit in June to overturn the state’s 2004 voter-approved ban on gay marriage and to force North Dakota to recognize marriages performed out-of-state as well.</div> <div class="backdiv"> <a href="#container">Back to map</a></div></div>
+
+                <div id="state39" class="country">
+                    <div class="cntydiv"><img src="images/ohio.png" class="stateImg"><b>Ohio</b>
+                    </br>A federal judge ruled in April that Ohio must recognize same-sex marriages performed out-of-state in all cases. In a separate case, a same-sex couple is suing the state after they were denied a family insurance plan under the Affordable Care Act. Meanwhile, a third case in which a judge ruled that the state must recognize same-sex marriages for the purpose of a death certificate is being appealed.</div> <div class="backdiv"> <a href="#container">Back to map</a></div></div>
+                
+                <div id="state40" class="country">
+                    <div class="cntydiv"><img src="images/okla.png" class="stateImg"><b>Oklahoma</b>
+                    </br>A judge ruled Oklahoma's 2004 ban unconstitutional in January, but same-sex marriage remains illegal in the state. The Tenth Circuit Court of Appeals is considering the case, and a similar one in Utah, and heard arguments in both cases in April. </div> <div class="backdiv"> <a href="#container">Back to map</a></div></div>
+
+                <div id="state41" class="country">
+                    <div class="cntydiv"><img src="images/ore.png" class="stateImg"><b>Oregon</b>
+                    </br>A judge ruled in May that the state’s 2004 ban on same-sex marriages is unconstitutional. The decision came after Democratic Attorney General Ellen Rosenblum refused to defend the ban in court. Same-sex partnerships were legalized in Oregon in 2007, but couples did not have full marriage rights. </div> <div class="backdiv"> <a href="#container">Back to map</a></div></div>
+                
+                <div id="state42" class="country">
+                    <div class="cntydiv"><img src="images/pa.png" class="stateImg"><b>Pennsylvania</b>
+                    </br>A federal judge ruled in May that the state’s Defense of Marriage Act was unconstitutional, allowing same-sex marriages to be performed in the state immediately. Days later, Republican Gov. Tom Corbett announced that he would not appeal the decision. Pennsylvania was the last state in the Northeast to legalize same-sex marriage. While Pennsylvania’s Legislature passed a legal ban on same-sex marriage in 1996, it was one of few states that never passed a constitutional ban (which needs to be approved by voters). </div><div class="backdiv"> <a href="#container">Back to map</a></div></div>
+                
+                <div id="state45" class="country">
+                    <div class="cntydiv"><img src="images/sc.png" class="stateImg"><b>South Carolina</b>
+                    </br>Two women who were married in the District of Columbia are suing for state recognition of their union, as well as an invalidation of South Carolina’s 2006 constitutional ban on same-sex marriages. Republican Gov. Nikki Haley, who is up for reelection this year, and the state attorney general have vowed to fight the case. </div><div class="backdiv"> <a href="#container">Back to map</a></div></div>
+
+                <div id="state46" class="country">
+                    <div class="cntydiv"><img src="images/sd.png" class="stateImg"><b>South Dakota</b>
+                    </br>Six same-sex couples filed suit in May to overturn the state’s 2006 gay-marriage ban. The suit also seeks to force South Dakota to recognize same-sex marriages performed outside the state. </div><div class="backdiv"> <a href="#container">Back to map</a></div></div>
+
+                <div id="state47" class="country">
+                    <div class="cntydiv"><img src="images/tenn.png" class="stateImg"><b>Tennessee</b>
+                    </br>Four married same-sex couples, as well as the National Center for Lesbian Rights, filed suit in October challenging the state's 2006 ban on gay marriages. The state is also pursuing legislation that would allow businesses and religious organizations to elect not to serve same-sex couples on the basis of religious objection. </div> <div class="backdiv"> <a href="#container">Back to map</a></div></div>
+
+                <div id="state48" class="country">
+                    <div class="cntydiv"><img src="images/texas.png" class="stateImg"><b>Texas</b>
+                    </br>A federal judge ruled that Texas' ban on same-sex marriage is unconstitutional on Feb. 26, but issued a stay to keep the ban in place for now. The stay is in place until the ruling can be reviewed on appeal, which will likely come from the state's Republican Attorney General Greg Abbott, who is also running for governor this year. </div><div class="backdiv"> <a href="#container">Back to map</a></div></div>
+
+                <div id="state49" class="country">
+                    <div class="cntydiv"><img src="images/utah.png" class="stateImg"><b>Utah</b>
+                    </br>A judge declared the state's 2004 ban on same-sex marriage unconstitutional in December, 2013, allowing weddings to move forward for two weeks before the U.S. Supreme Court issued a stay and put the marriages on hold. The case is being combined with a separate case in Oklahoma, both of which were heard by the 10th Circuit Court of Appeals in April. Utah is also pursuing legislation that would allow businesses and religious organizations to elect not to serve same-sex couples on the basis of religious objection. </div><div class="backdiv"> <a href="#container">Back to map</a></div></div>
+
+                <div id="state51" class="country">
+                    <div class="cntydiv"><img src="images/va.png" class="stateImg"><b>Virginia</b>
+                    </br>A U.S. District Court judge overturned the state's 2006 constitutional ban this month, but stayed the decision while Virginia considers an appeal. Newly elected Attorney General Mark Herring, a Democrat, has said that he will not defend the ban. </div> <div class="backdiv"> <a href="#container">Back to map</a></div></div>
+                
+                <div id="state54" class="country">
+                    <div class="cntydiv"><img src="images/wv.png" class="stateImg"><b>West Virginia</b>
+                    </br>Lambda Legal and a state-based gay-rights organization filed suit on behalf of three same-sex couples in October to overturn the state's 2000 law banning same-sex marriage (a proposed amendment to the state constitution banning marriages failed in 2009). A judge denied the state's motion to dismiss the case in late January. </div><div class="backdiv"> <a href="#container">Back to map</a></div></div>
+
+                <div id="state55" class="country">
+                    <div class="cntydiv"><img src="images/wisc.png" class="stateImg"><b>Wisconsin</b>
+                    </br>The ACLU filed suit on behalf of three same-sex couples this month to overturn the state’s 2006 constitutional ban. Meanwhile, Democrats in both chambers of the state Legislature are cosponsoring a bill to overturn the ban. They'll have to pass it in two consecutive sessions in order to put the issue to voters on a future ballot. </div><div class="backdiv"> <a href="#container">Back to map</a></div></div>
+                
+                <div id="state56" class="country">
+                    <div class="cntydiv"><img src="images/wy.png" class="stateImg"><b>Wyoming</b>
+                    </br>Wyoming passed a law in 1977 banning same-sex marriage. Republican state Rep. Gerald Gay is currently sponsoring a bill to include a ban in the state's constitution as well. </div><div class="backdiv"> <a href="#container">Back to map</a></div></div>
+                
+        </div>
+        <script type="text/javascript">
+            function zIndex(evt) {
+                var element = evt.target; //get node reference
+                element.parentNode.appendChild(element); //appendChild after the last child
+            }
+
+            $(document).ready(function() {
+
+                //Width and height
+                var w = 740;
+                var h = 420;
+
+
+                //cloropath colors
+                var color = d3.scale.quantize()
+                    .range(["#ed1c24", "#FF8593", "#00aeef", "#0080c3"]);
+
+                //define the projection
+                var projection = d3.geo.albersUsa()
+                    .translate([380, h / 2]) //centers
+                .scale([850]); //default 1000
+
+                //Path generator (converts json to svg) Theorettically json can go inside here.
+                //create projection
+                var path = d3.geo.path()
+                    .projection(projection);
+
+
+                //Create SVG element
+                var svg = d3.select("#mapContainer")
+                    .append("svg")
+                    .attr("width", w)
+                    .attr("height", h);
+
+                //add same-sex marriage info
+                d3.csv("state-gay-022014.csv", function(data) {
+
+                    //range forcolor data
+                    color.domain([
+                    d3.min(data, function(d) {
+                        return d.value;
+                    }),
+                    d3.max(data, function(d) {
+                        return d.value;
+                    })]);
+
+                    //Load in GeoJSON data
+                    d3.json("us-states.json", function(json) {
+
+                        //Merge the same-sex data and GeoJSON
+                        //Loop through once
+                        for (var i = 0; i < data.length; i++) {
+
+                            var dataState = data[i].state; //grab csv data
+                            var dataType = data[i].typegay;
+                            var dataDate = data[i].date;
+                            var dataBattle = parseFloat(data[i].battle);
+                            var dataValue = parseFloat(data[i].value); //parseFloat converts string to float
+
+                            //Find the corresponding state inside the GeoJSON
+                            for (var j = 0; j < json.features.length; j++) {
+                                var jsonState = json.features[j].properties.name;
+                                if (dataState == jsonState) {
+                                    //Copy the data value into the JSON properties
+                                    json.features[j].properties.value = dataValue;
+                                    json.features[j].properties.typegay = dataType;
+                                    json.features[j].properties.date = dataDate;
+                                    json.features[j].properties.battle = dataBattle;
+                                    break; //Stop looking through the JSON
+                                }
+                            }
+                        }
+
+                        //Bind data and create one path per GeoJSON feature
+                        /*svg.selectAll("path")
+                           .data(json.features)
+                           .enter()
+                           .append("path")
+                           .attr("d", path);*/
+
+
+                        svg.selectAll("path")
+                            .data(json.features)
+                            .enter()
+                            .append("path")
+                            .attr("name", function(d){
+                                return d.properties.name
+                            })
+                            .attr("id", function(d){
+                                return d.id
+                            })
+                            .style("fill", function(d) {
+                            //Get data value
+                            var value = d.properties.value;
+
+                            if (value) {
+                                //If value exists…
+                                return color(value);
+                            } else {
+                                //If value is undefined…
+                                return ".path";
+                            }
+                        })  
+                            .attr("d", path)
+                            .attr("onmouseover", "zIndex(evt)")
+                            .on("mouseover", mouseover)
+                            .on("mousemove", mousemove)
+                            .on("mouseout", mouseout)
+                            .on("click", clickState) ;
+
+                        //tooltip
+                        var tooltip = d3.select("body")
+                            .append("div")
+                            .attr("class", "tooltip")
+
+                        //scroll
+                        function scrollToDiv(s){
+                            $('body').stop()
+                                    .animate({
+                                        scrollTop: s.offset().top -10 }, 
+                                        600, function(){
+                                        click_scroll = true;
+                                    });
+                        }
+
+
+                        //click
+                        function clickState(d){
+                            //d3.select(this)
+                                //.style({"fill": "green"})
+
+                            var divSlug = '#state' + $(this).attr('id');
+
+                            scrollToDiv($(divSlug));
+
+                            console.log("'#" + d.properties.name + "'");
+                            };
+
+                        //Rollover attributes
+                        function mouseover(d) {
+                                d3.select(this)
+                                    .style({
+                                    'stroke-width': 2,
+                                    'stroke': '#000'
+                                })
+
+                                tooltip.style("visibility", "visible")
+                            };
+
+                        function mousemove(d, i) {
+                            tooltip.style("visibility", "visible")
+                                .style("top", d3.event.pageY + "px")
+                                .style("left", d3.event.pageX + "px")
+                                .html("<span class='tipHed'>" + d.properties.name + "</span> <p>" + d.properties.typegay + "</p>" + d.properties.date)
+
+                        };
+
+                        function mouseout(d) {
+                            d3.select(this)
+                                .style({
+                                'stroke-width': 1,
+                                'stroke': '#fff'
+                            })
+
+                            tooltip.style("visibility", "hidden")
+                        };
+
+                        $("#showAll").click(function(e) {
+
+                            svg.selectAll("path")
+                                .style("opacity", function(d) {
+                                return "1.0"
+                            });
+
+                        });
+
+                        $("#court").click(function(e) {
+
+                            svg.selectAll("path")
+                                .style("opacity", function(d) {
+
+                                var battle = d.properties.battle;
+
+                                if (battle == 1 || battle == 2) {
+                                    return "1.0";
+                                } else {
+                                    return "0.1";
+                                }
+                            });
+
+                        });
+
+                        $("#legal").click(function(e) {
+
+                            svg.selectAll("path")
+                                .style("opacity", function(d) {
+
+                                var battle = d.properties.battle;
+
+                                if (battle == 2 || battle == 3) {
+                                    return "1.0";
+                                } else {
+                                    return "0.1";
+                                }
+                            });
+
+                        });
+                    });
+                });
+            });
+        </script>
+    </body>
+
+</html>
